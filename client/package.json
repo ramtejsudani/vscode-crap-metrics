@@ -1,0 +1,86 @@
+{
+  "name": "vscode-crap-metrics",
+  "displayName": "CRAP Metrics",
+  "description": "Displays Cyclomatic Complexity and CRAP score inline for C# methods",
+  "version": "1.0.0",
+  "publisher": "RamtejDevLabs",
+  "author": {
+    "name": "Ramtej Sudani"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RamtejSudani/vscode-crap-metrics"
+  },
+  "bugs": {
+    "url": "https://github.com/RamtejSudani/vscode-crap-metrics/issues"
+  },
+  "homepage": "https://github.com/RamtejSudani/vscode-crap-metrics#readme",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters"
+  ],
+  "keywords": [
+    "csharp",
+    "metrics",
+    "complexity",
+    "crap",
+    "cyclomatic"
+  ],
+  "activationEvents": [
+    "onLanguage:csharp"
+  ],
+  "main": "./out/extension.js",
+  "icon": "images/icon.png",
+  "contributes": {
+    "configuration": {
+      "title": "CRAP Metrics",
+      "properties": {
+        "crapMetrics.showOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Refresh CRAP metrics automatically when a file is saved"
+        },
+        "crapMetrics.warnThreshold": {
+          "type": "number",
+          "default": 15,
+          "description": "CRAP score threshold above which a warning indicator is shown"
+        }
+      }
+    }
+  },
+"scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "bundle": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "bundle-watch": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --watch",
+    "build-server": "dotnet publish ../server/CrapMetricsServer/CrapMetricsServer.csproj --configuration Release --output ./server",
+    "vscode:prepublish": "npm run build-server && npm run bundle"
+},
+  "files": [
+    "out/**",
+    "server/**",
+    "images/**",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.27.3",
+    "eslint": "^8.0.0",
+    "semantic-release": "^24.2.9",
+    "typescript": "^5.9.3"
+  }
+}

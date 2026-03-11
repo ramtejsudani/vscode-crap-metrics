@@ -1,0 +1,19 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+TestResults/
+coverage/
+
+# Node
+node_modules/
+out/
+*.vsix
+*.js.map
+
+# VS Code
+.vscode-test/
+
+# Logs
+*.log
