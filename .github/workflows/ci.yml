@@ -17,12 +17,19 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-
+          
+      - name: Print repo structure
+        run: |
+          echo "Working directory:"
+          pwd
+          echo "Listing files:"
+          find .
+      
       - name: Restore
-        run: dotnet restore
-
+        run: dotnet restore server/CrapMetricsServer/Crapmetricsserver.csproj
+      
       - name: Build
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build server/CrapMetricsServer/Crapmetricsserver.csproj --no-restore --configuration Release
 
   client:
     name: Build Client
