@@ -19,10 +19,10 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore
-        run: dotnet restore server/CrapMetricsServer/CrapMetricsServer.csproj
+        run: dotnet restore
 
       - name: Build
-        run: dotnet build server/CrapMetricsServer/CrapMetricsServer.csproj --no-restore --configuration Release
+        run: dotnet build --no-restore --configuration Release
 
   client:
     name: Build Client
