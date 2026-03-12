@@ -2,7 +2,7 @@
   "name": "vscode-crap-metrics",
   "displayName": "CRAP Metrics",
   "description": "Displays Cyclomatic Complexity and CRAP score inline for C# methods",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "publisher": "RamtejDevLabs",
   "author": {
     "name": "Ramtej Sudani"
