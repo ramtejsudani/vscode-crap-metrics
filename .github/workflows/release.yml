@@ -1,98 +1,39 @@
-name: Release
+name: Build Extension
 
 on:
   push:
-    branches: [main]
-
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+    branches: [master]
+  pull_request:
 
 jobs:
-  release:
-    name: Release
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0        # semantic-release needs full git history
-          persist-credentials: false
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '8.0.x'
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: npm
           cache-dependency-path: client/package-lock.json
 
-      # ── Build server in Release mode ──────────────────────────────────────
-      - name: Build server
-        run: |
-          dotnet publish server/CrapMetricsServer/CrapMetricsServer.csproj \
-            --configuration Release \
-            --runtime linux-x64 \
-            --self-contained false \
-            --output client/server
-
-      # Also publish for Windows and macOS so the .vsix supports all platforms
-      - name: Build server (Windows)
-        run: |
-          dotnet publish server/CrapMetricsServer/CrapMetricsServer.csproj \
-            --configuration Release \
-            --runtime win-x64 \
-            --self-contained false \
-            --output client/server
-
-      - name: Build server (macOS)
-        run: |
-          dotnet publish server/CrapMetricsServer/CrapMetricsServer.csproj \
-            --configuration Release \
-            --runtime osx-x64 \
-            --self-contained false \
-            --output client/server
-
-      # ── Install client deps & compile ─────────────────────────────────────
-      - name: Install client dependencies
+      - name: Install dependencies
         run: npm ci
         working-directory: client
 
-      - name: Compile TypeScript
-        run: npm run compile
+      - name: Package VSIX
+        run: npx @vscode/vsce package
         working-directory: client
 
-      # ── semantic-release: bumps version, creates GitHub release & tag ─────
-      - name: semantic-release
-        id: semantic
-        uses: cycjimmy/semantic-release-action@v4
+      - name: Upload extension artifact
+        uses: actions/upload-artifact@v4
         with:
-          working_directory: client
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # ── Package and publish to VS Code Marketplace ────────────────────────
-      - name: Package extension
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: npx vsce package
-        working-directory: client
-
-      - name: Publish to Marketplace
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: npx vsce publish --pat ${{ secrets.VSCE_PAT }}
-        working-directory: client
-
-      # ── Upload .vsix as GitHub Release asset ──────────────────────────────
-      - name: Upload vsix to GitHub Release
-        if: steps.semantic.outputs.new_release_published == 'true'
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: v${{ steps.semantic.outputs.new_release_version }}
-          files: client/*.vsix
+          name: vscode-crap-metrics
+          path: client/*.vsix
