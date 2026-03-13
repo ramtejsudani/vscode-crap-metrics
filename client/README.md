@@ -34,9 +34,9 @@ Higher scores indicate code that is harder to maintain and more likely to break 
 
 ## Screenshot
 
-![CRAP Metrics Example](images/example.png)
+![CRAP Metrics Example](./images/example.png)
 
-![CRAP Metrics Example](images/example1.png)
+![CRAP Metrics Example](./images/example1.png)
 
 Shows CRAP score and Cyclomatic Complexity directly above C# methods.
 
