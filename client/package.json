@@ -60,13 +60,6 @@
     "build-server": "dotnet publish ../server/CrapMetricsServer/Crapmetricsserver.csproj --configuration Release --output ./server",
     "vscode:prepublish": "npm run build-server && npm run bundle"
 },
-  "files": [
-    "out/**",
-    "server/**",
-    "images/**",
-    "LICENSE",
-    "README.md"
-  ],
   "dependencies": {
     "vscode-languageclient": "^9.0.1"
   },
