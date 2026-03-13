@@ -28,6 +28,15 @@ jobs:
         run: npm ci
         working-directory: client
 
+      - name: Show repo structure
+        run: tree -L 3
+
+      - name: Restore
+        run: dotnet restore server/CrapMetricsServer/Crapmetricsserver.csproj
+      
+      - name: Build
+        run: dotnet build server/CrapMetricsServer/Crapmetricsserver.csproj --no-restore --configuration Release
+
       - name: Package VSIX
         run: npx @vscode/vsce package
         working-directory: client
