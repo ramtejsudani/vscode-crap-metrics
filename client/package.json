@@ -57,7 +57,7 @@
     "watch": "tsc -watch -p ./",
     "bundle": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
     "bundle-watch": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --watch",
-    "build-server": "dotnet publish ../server/CrapMetricsServer/CrapMetricsServer.csproj --configuration Release --output ./server",
+    "build-server": "dotnet publish ../server/CrapMetricsServer/Crapmetricsserver.csproj --configuration Release --output ./server",
     "vscode:prepublish": "npm run build-server && npm run bundle"
 },
   "files": [
