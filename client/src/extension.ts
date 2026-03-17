@@ -126,11 +126,23 @@ function resolveServerPath(
 
 function resolveDotnetCommand(): string {
 
-    // Windows uses dotnet.exe
     if (process.platform === 'win32') {
         return 'dotnet'
     }
 
-    // macOS / Linux
+    const candidates = [
+        '/usr/local/share/dotnet/dotnet',   // Intel Mac
+        '/opt/homebrew/bin/dotnet',         // Apple Silicon (M1/M2)
+        'dotnet'                           // fallback
+    ]
+
+    for (const cmd of candidates) {
+        try {
+            if (fs.existsSync(cmd)) {
+                return cmd
+            }
+        } catch { }
+    }
+
     return 'dotnet'
 }
