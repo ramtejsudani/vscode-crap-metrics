@@ -2,7 +2,7 @@
   "name": "vscode-crap-metrics",
   "displayName": "CRAP Metrics",
   "description": "Displays Cyclomatic Complexity and CRAP score inline for C# methods",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "publisher": "RamtejDevLabs",
   "author": {
     "name": "Ramtej Sudani"
@@ -52,14 +52,14 @@
       }
     }
   },
-"scripts": {
+  "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "bundle": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
     "bundle-watch": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --watch",
     "build-server": "dotnet publish ../server/CrapMetricsServer/Crapmetricsserver.csproj --configuration Release --output ./server",
     "vscode:prepublish": "npm run build-server && npm run bundle"
-},
+  },
   "dependencies": {
     "vscode-languageclient": "^9.0.1"
   },
