@@ -41,8 +41,3 @@ jobs:
         with:
           name: vscode-crap-metrics
           path: client/*.vsix
-      - name: Install vsce
-        run: npm install -g @vscode/vsce
-
-      - name: Publish to VS Code Marketplace
-        run: vsce publish --packagePath client/*.vsix ${{ secrets.VSCE_PAT }}
